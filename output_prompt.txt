@@ -1,0 +1,2 @@
+Based on the given query, the result has been logically deduced. 
+You have to use natural language processing to write a sentence that says spells out what the result was in the context of the query.

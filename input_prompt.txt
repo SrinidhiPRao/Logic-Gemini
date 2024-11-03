@@ -1,0 +1,1 @@
+Convert the following question into Prolog facts and rules, and generate a Prolog-compatible query. Only give the code, do not give any explanation.

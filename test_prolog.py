@@ -15,7 +15,7 @@ cousin(X, Y) :- parent(A, X), parent(B, Y), sibling(A, B)."""
 
 query1 = """sibling(X, tom).
 """
-query2 = """sibling(mary, tom).
+query2 = """aunt(tom, lily).
 """
 
 create_knowledge_base(kb)

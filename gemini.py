@@ -1,6 +1,8 @@
 from os import getenv
 from dotenv import load_dotenv
+
 import google.generativeai as genai
+from google.generativeai.types import HarmCategory, HarmBlockThreshold
 
 class Gemini_Model:
     def __init__(self):
@@ -12,7 +14,7 @@ class Gemini_Model:
         model = genai.GenerativeModel("gemini-1.5-flash")
         
         self.model = model
-            
+
     def query_gemini(self, natural_language_query: str) -> str:
         """
         Queries Gemini with the user's prompt along with some pre-prompting.
@@ -24,12 +26,21 @@ class Gemini_Model:
             str: Gemini's prolog response.
         """
         self.query = natural_language_query
-        prompt = "Convert the following question into Prolog facts and rules, and generate a Prolog-compatible query. Only give the code, do not give any explanation."
+        prompt = open("input_prompt.txt", 'r').read()
         prompt += natural_language_query
         
-        response = self.model.generate_content(prompt)
-        response_text = response.text
-        return response_text
+        response = self.model.generate_content([prompt], 
+            safety_settings={
+                HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_NONE,
+                HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
+            })
+
+        try:
+            response_text = str(response.text)
+            return response_text
+        except ValueError:
+            print(response.prompt_feedback)
+            return "Harmful response and/or query"
 
     def send_results(self, results: dict) -> str:
         """
@@ -41,8 +52,18 @@ class Gemini_Model:
             str: Natural language interpretation of prolog results.
         
         """
-        prompt = str(results) + ".This is the solution to "+ self.query +". Write this out in natural language."
-        response = self.model.generate_content(prompt)
-        response_text = str(response.text)
-        return response_text
+
+        prompt = "The user's query is " + self.query + open('output_prompt.txt', 'r').read() + "This is the result" + str(results) 
+        response = self.model.generate_content([prompt],
+            safety_settings={
+                HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_NONE,
+                HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
+            })
+
+        try:
+            response_text = str(response.text)
+            return response_text
+        except ValueError:
+            print(response.prompt_feedback)
+            return "Harmful response and/or query."
 

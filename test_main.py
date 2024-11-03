@@ -20,6 +20,8 @@ from utils import prologify
 
 natural_language_query = "Socrates is a man. All men are mortal. What is Socrates?"
 
+# natural_language_query = "Hello, how are you?"
+
 g = Gemini_Model()
 gemini_response = g.query_gemini(natural_language_query)
 
