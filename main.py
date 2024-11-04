@@ -1,12 +1,11 @@
-from dummy_frontend import user_input
 from gemini import Gemini_Model
 from utils import prologify
 from prolog import create_knowledge_base, query_knowledge_base
 
 
-def main():
+def main(prompt: str) -> str:
     gemini_model = Gemini_Model()
-    prompt = user_input()
+    
     
     gemini_response = gemini_model.query_gemini(prompt)
     
@@ -17,8 +16,9 @@ def main():
 
     natural_language_output = gemini_model.send_results(prolog_output)
 
-    print(natural_language_output)
+    return natural_language_output
+
 
 
 if __name__ == "__main__":
-    main()
+    print(main(input("Enter query: ")))

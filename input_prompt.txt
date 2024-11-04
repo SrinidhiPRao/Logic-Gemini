@@ -1,1 +1,14 @@
-Convert the following question into Prolog facts and rules, and generate a Prolog-compatible query. Only give the code, do not give any explanation.
+Note this example prolog response given below: 
+```prolog
+behind(anu, bala).
+behind(bala, cory).
+
+behind(donald, anu).
+
+behind_recursive(X, Y) :- behind(X, Y).
+behind_recursive(X, Y) :- behind(X, Z), behind_recursive(Z, Y).
+
+?- behind_recursive(donald, Who).
+```
+
+Convert the following statements into detailed set of Prolog facts, rules, query and Generate a complete executable prolog code, as shown in above example, do not include any explanation.

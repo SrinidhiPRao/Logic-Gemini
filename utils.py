@@ -21,6 +21,7 @@ def prologify(gemini_response: str) -> dict[str, str]:
         "queries": queries
         }
     except IndexError:
+        print(f"Gemini output: {kb_plus_queries}")
         sys.exit("Incorrect Prolog code sent by Gemini API.")
 
     

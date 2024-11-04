@@ -11,8 +11,9 @@ class Gemini_Model:
 
         genai.configure(api_key=API_Key)
 
-        model = genai.GenerativeModel("gemini-1.5-flash")
-        
+        # model = genai.GenerativeModel("gemini-1.5-flash")
+        model = genai.GenerativeModel("gemini-1.5-pro")
+
         self.model = model
 
     def query_gemini(self, natural_language_query: str) -> str:
