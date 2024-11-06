@@ -12,11 +12,12 @@ def query_knowledge_base(queries: str) -> dict:
     # return list(Prolog.query(queries))
 
     try:
-        prolog_result = next(Prolog.query(queries))
-        if prolog_result == {}:
-            return {"result": True}
-        else:
-            return prolog_result
+        if queries:
+            prolog_result = next(Prolog.query(queries))
+            if prolog_result == {}:
+                return {"result": True}
+            else:
+                return prolog_result
     except PrologError:
         exit("Gemini response has faulty logic or prolog engine has failed.")
     except StopIteration:

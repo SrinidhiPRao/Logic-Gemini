@@ -1,5 +1,5 @@
 from gemini import Gemini_Model
-from utils import prologify
+from utils import gemini_response_to_prolog
 from prolog import create_knowledge_base, query_knowledge_base
 
 
@@ -9,7 +9,7 @@ def main(prompt: str) -> str:
     
     gemini_response = gemini_model.query_gemini(prompt)
     
-    prolog_input = prologify(gemini_response)
+    prolog_input = gemini_response_to_prolog(gemini_response)
     
     create_knowledge_base(prolog_input["knowledge_base"])
     prolog_output = query_knowledge_base(prolog_input["queries"])

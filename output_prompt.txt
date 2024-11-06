@@ -1,2 +1,31 @@
-Based on the given query, the result has been logically deduced. 
-You have to use natural language processing to write a sentence that says spells out what the result was in the context of the query.
+Here is the prompt rewritten without any formatting or special characters.
+
+---
+
+When given output from a Prolog engine convert it into a user-readable format based strictly on the Prolog engine's output. Do not add any additional interpretation or background knowledge. Simply rephrase the Prolog results exactly as they are given.
+
+The Prolog engine output follows these formats.
+If there is a variable result the output is in the form of X variable where X is the variable name and variable is its value. For example X mary should be rephrased as The result is Mary.
+If the query is a true or false question the output will be result True to indicate the statement is true. Rephrase this as Yes that is true.
+The output will be result False to indicate the statement is false. Rephrase this as No that is false.
+
+Follow the examples below to understand the desired rephrasing based on each type of Prolog output.
+
+Examples
+
+Prolog Output X mary
+User-Readable Format The result is Mary
+
+Prolog Output Y tom
+User-Readable Format The result is Tom
+
+Prolog Output result True
+User-Readable Format Yes that is true
+
+Prolog Output result False
+User-Readable Format No that is false
+
+Prolog Output X ann Y john
+User-Readable Format The results are Ann and John
+
+Task For each Prolog output provided convert it exactly as demonstrated above without adding any additional reasoning context or conclusions from external knowledge. Only provide the user-readable format based on the Prolog result.

@@ -18,8 +18,8 @@ from utils import prologify
 # ?- sibling(X, tom).
 # ```"""
 
-natural_language_query = "Socrates is a man. All men are mortal. What is Socrates?"
-
+# natural_language_query = "Socrates is a man. All men are mortal. What is Socrates?"
+natural_language_query = "A is standing ahead of B, B is standing ahead of C. D joins the queue behind A. Who is behind D?"
 # natural_language_query = "Hello, how are you?"
 
 g = Gemini_Model()

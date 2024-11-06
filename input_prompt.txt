@@ -1,14 +1,56 @@
-Note this example prolog response given below: 
-```prolog
-behind(anu, bala).
-behind(bala, cory).
+Convert a natural language query into Prolog code by breaking it into atomic statements. Each statement should be represented using Prolog syntax for facts and rules, followed by any relevant queries. Use the following explanations and examples to understand the syntax of Prolog and how to structure knowledge bases. For each example, include an explanation of the facts and rules in Prolog, so it understands the intended meaning of predicates, arguments, and logical rules.
 
-behind(donald, anu).
+### Prolog Syntax and Representation
 
-behind_recursive(X, Y) :- behind(X, Y).
-behind_recursive(X, Y) :- behind(X, Z), behind_recursive(Z, Y).
+- In Prolog, **facts** are base statements about relationships or properties. They follow the syntax `predicate(subject, object).`
+  - For example, `parent(john, mary).` means "John is the parent of Mary."
+  - `sibling(X, Y).` means "X and Y are siblings."
 
-?- behind_recursive(donald, Who).
-```
+- **Rules** allow the deduction of new information from facts and other rules. Rules follow the format `rule_head :- condition1, condition2, ... .`
+  - For instance, `grandparent(X, Y) :- parent(X, Z), parent(Z, Y).` means "X is a grandparent of Y if X is a parent of Z and Z is a parent of Y."
 
-Convert the following statements into detailed set of Prolog facts, rules, query and Generate a complete executable prolog code, as shown in above example, do not include any explanation.
+- **Queries** are questions about the knowledge base that Prolog can answer based on the facts and rules provided. Queries follow the format `?- query(condition).`
+  - For example, `?- grandparent(john, X).` asks, "Who is John a grandparent of?"
+
+### Examples
+
+1. **Natural Language**: "John is the parent of Mary and Tom. Mary is the parent of Ann."
+   - **Prolog Code**:
+     ```prolog
+     parent(john, mary).
+     parent(john, tom).
+     parent(mary, ann).
+     ```
+   - **Explanation**: Here, `parent(john, mary).` means "John is the parent of Mary." Each statement defines a relationship using the `parent` predicate. Prolog statements end with a period to indicate the end of the fact or rule.
+
+2. **Natural Language**: "If X is a parent of Y and Y is a parent of Z, then X is a grandparent of Z."
+   - **Prolog Code**:
+     ```prolog
+     grandparent(X, Z) :- parent(X, Y), parent(Y, Z).
+     ```
+   - **Explanation**: This rule uses the `grandparent` predicate to define a relationship between X and Z. The statement `grandparent(X, Z) :- parent(X, Y), parent(Y, Z).` means "X is a grandparent of Z if X is a parent of Y and Y is a parent of Z." In Prolog, rules are written with `:-` to mean "if," followed by the conditions required for the rule to be true.
+
+3. **Natural Language**: "Mary and Tom are siblings if they share the same parent, John."
+   - **Prolog Code**:
+     ```prolog
+     sibling(mary, tom) :- parent(john, mary), parent(john, tom), mary \= tom.
+     ```
+   - **Explanation**: The rule `sibling(mary, tom) :- parent(john, mary), parent(john, tom), mary \= tom.` defines Mary and Tom as siblings if they share a parent (in this case, John). The condition `mary \= tom` ensures that Mary and Tom are not the same person.
+
+4. **Natural Language**: "Who is John’s grandchild?"
+   - **Prolog Code**:
+     ```prolog
+     ?- grandparent(john, X).
+     ```
+   - **Explanation**: This query asks Prolog to find any individuals for whom John is a grandparent. The question is structured as `?- grandparent(john, X).`, where `?-` denotes a query, `grandparent` is the predicate, and `X` is a variable representing the answer.
+
+5. **Natural Language**: "If X and Y are siblings, and X has a child Z, then Y is Z’s uncle or aunt."
+   - **Prolog Code**:
+     ```prolog
+     uncle_or_aunt(Y, Z) :- sibling(X, Y), parent(X, Z).
+     ```
+   - **Explanation**: This rule defines `uncle_or_aunt` using the conditions `sibling(X, Y)` and `parent(X, Z)`. The statement means "Y is Z's uncle or aunt if X and Y are siblings, and X is a parent of Z."
+
+---
+
+**Task**: For any natural language query, output only the Prolog code representation following the structure and syntax demonstrated above. Ensure the Prolog code is provided without additional explanations or formatting, as that would interfere with my website’s functionality.
