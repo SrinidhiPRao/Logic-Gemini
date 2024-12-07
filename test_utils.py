@@ -1,70 +1,20 @@
-from utils import gemini_response_to_prolog
+from utils import prologify
 
 
-gemini_response = """```json
-{
-  "facts": [
-    {"subject": "john", "predicate": "parent", "object": "mary"},
-    {"subject": "john", "predicate": "parent", "object": "tom"},
-    {"subject": "mary", "predicate": "parent", "object": "ann"},
-    {"subject": "mary", "predicate": "parent", "object": "lily"},
-    {"subject": "tom", "predicate": "parent", "object": "sam"}
-  ],
-  "rules": [
-    {
-      "head": "grandparent(X, Y)",
-      "body": ["parent(X, Z)", "parent(Z, Y)"]
-    },
-    {
-      "head": "aunt(X, Y)",
-      "body": ["sibling(X, Z)", "parent(Z, Y)"]
-    },
-    {
-      "head": "uncle(X, Y)",
-      "body": ["sibling(X, Z)", "parent(Z, Y)"]
-    },
-    {
-      "head": "cousin(X, Y)",
-      "body": ["parent(A, X)", "parent(B, Y)", "sibling(A, B)"]
-    }
-  ],
-  "query": "grandparent(X, mary)"
-}
+gemini_response = """```prolog
+parent(john, mary).
+parent(john, tom).
+parent(mary, ann).
+parent(mary, lily).
+parent(tom, sam).
+
+grandparent(X, Y) :- parent(X, Z), parent(Z, Y).
+sibling(X, Y) :- parent(Z, X), parent(Z, Y), X \= Y.
+aunt(X, Y) :- sibling(X, Z), parent(Z, Y).
+uncle(X, Y) :- sibling(X, Z), parent(Z, Y).
+cousin(X, Y) :- parent(A, X), parent(B, Y), sibling(A, B).
+
+?- sibling(X, tom).
 ```"""
 
-
-print(gemini_response_to_prolog(gemini_response))
-
-
-# Sample JSON input
-json_data = {
-    "facts": [
-        {"subject": "john", "predicate": "parent", "object": "mary"},
-        {"subject": "john", "predicate": "parent", "object": "tom"},
-        {"subject": "mary", "predicate": "parent", "object": "ann"},
-        {"subject": "mary", "predicate": "parent", "object": "lily"},
-        {"subject": "tom", "predicate": "parent", "object": "sam"}
-    ],
-    "rules": [
-        {
-            "head": "grandparent(X, Y)",
-            "body": ["parent(X, Z)", "parent(Z, Y)"]
-        },
-        {
-            "head": "sibling(X, Y)",
-            "body": ["parent(Z, X)", "parent(Z, Y)", "X \\= Y"]
-        },
-        {
-            "head": "aunt(X, Y)",
-            "body": ["sibling(X, Z)", "parent(Z, Y)"]
-        },
-        {
-            "head": "uncle(X, Y)",
-            "body": ["sibling(X, Z)", "parent(Z, Y)"]
-        },
-        {
-            "head": "cousin(X, Y)",
-            "body": ["parent(A, X)", "parent(B, Y)", "sibling(A, B)"]
-        }
-    ]
-}
+print(prologify(gemini_response))
