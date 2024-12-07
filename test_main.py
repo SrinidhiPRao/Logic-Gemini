@@ -2,25 +2,9 @@ from gemini import Gemini_Model
 from prolog import create_knowledge_base, query_knowledge_base
 from utils import prologify
 
-# gemini_response = """```prolog
-# parent(john, mary).
-# parent(john, tom).
-# parent(mary, ann).
-# parent(mary, lily).
-# parent(tom, sam).
-
-# grandparent(X, Y) :- parent(X, Z), parent(Z, Y).
-# sibling(X, Y) :- parent(Z, X), parent(Z, Y), X \= Y.
-# aunt(X, Y) :- sibling(X, Z), parent(Z, Y).
-# uncle(X, Y) :- sibling(X, Z), parent(Z, Y).
-# cousin(X, Y) :- parent(A, X), parent(B, Y), sibling(A, B).
-
-# ?- sibling(X, tom).
-# ```"""
-
 # natural_language_query = "Socrates is a man. All men are mortal. What is Socrates?"
-natural_language_query = "A is standing ahead of B, B is standing ahead of C. D joins the queue behind A. Who is behind D?"
-# natural_language_query = "Hello, how are you?"
+# natural_language_query = "A is standing ahead of B, B is standing ahead of C. D joins the queue behind A. Who is behind D?"
+natural_language_query = "I am a 4 digit number. My rightmost digit is not divisible by 2. The sum of my digits is 20, and all my digits are in strictly decreasing order from left to right. One of my digits is 4 times one of my other digits, and the difference between my 2 middle digits is more than 3. What number am I?"
 
 g = Gemini_Model()
 gemini_response = g.query_gemini(natural_language_query)
