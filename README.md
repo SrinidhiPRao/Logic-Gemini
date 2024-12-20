@@ -59,14 +59,16 @@ Ensure SWI-Prolog is installed on your system. Test the installation by running:
 ```bash
 swipl
 ```
+Or download from https://www.swi-prolog.org/
 
 ### Step 4: Configure Gemini API
 
-Create a `.env` file in the directory and add your Gemini API key:
+Create a `.env` file in the directory if it doesn't exist already and add your Gemini API key:
 
 ```
 API_KEY=your_api_key_here
 ```
+Or follow the steps in [Gemini API Docs](https://ai.google.dev/gemini-api/docs/api-key) to get an API Key.
 
 ### Step 5: Run the Backend Server
 
@@ -137,9 +139,3 @@ The frontend should now be accessible at `http://localhost:5173`.
 
   ```
 **Output:** "The results are 9, 8, 2, and 1."
-
-## Future Enhancements
-
-- Expand Prolog knowledge bases for domain-specific applications.
-- Improve error handling for ambiguous or invalid queries.
-- Add visualizations for Prolog logic and reasoning on the frontend.
